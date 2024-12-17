@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Profile Viewer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #232526, #414345);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #f5f5f5;
+        }
+
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        input {
+            width: 70%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #6a11cb;
+            border-radius: 5px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        input:focus {
+            border-color: #f5f5f5;
+            background-color: #444;
+            color: #fff;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+
+        #profile {
+            margin-top: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #profile h2 {
+            color: #f5f5f5;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        #Profile_pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        #profile p {
+            font-size: 1.1em;
+            margin: 5px 0;
+            color: #dcdcdc;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Github Profile Viewer</h1>
+        <input type="text" id="username" placeholder="Enter GitHub Username">
+        <button id="button" onclick="getprofile()">Get Profile</button>
+        <div id="profile"></div>
+    </div>
+
+    <script>
+        function getprofile() {
+            const username = document.getElementById('username').value;
+
+            if (!username) {
+                alert("Please enter a valid GitHub username!");
+                return;
+            }
+
+            fetch(`https://api.github.com/users/${username}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Profile not found!');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    displayprofile(data);
+                })
+                .catch((err) => {
+                    console.error("There was a problem: ", err);
+                    alert("Error fetching profile. Please check the username.");
+                });
+        }
+
+        function displayprofile(data) {
+            const profile = document.getElementById('profile');
+
+            profile.innerHTML = `
+                <img id="Profile_pic" src="${data.avatar_url}" alt="Profile Picture">
+                <h2>${data.login}</h2>
+                <p><strong>Name:</strong> ${data.name || "N/A"}</p>
+                <p><strong>Public Repositories:</strong> ${data.public_repos}</p>
+                <p><strong>Followers:</strong> ${data.followers}</p>
+                <p><strong>Following:</strong> ${data.following}</p>
+                <p><strong>Bio:</strong> ${data.bio || "No bio available"}</p>
+                <p><a href="${data.html_url}" target="_blank" style="color: #6a11cb; text-decoration: none; font-weight: bold;">View Profile on GitHub</a></p>
+            `;
+        }
+    </script>
+</body>
+</html>
