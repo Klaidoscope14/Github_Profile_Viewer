@@ -31,7 +31,8 @@ This is a simple web application that allows users to view GitHub profiles by en
 
 ## Screenshots
 
-![GitHub Profile Viewer](https://via.placeholder.com/600x300?text=Add+Screenshots+Here)
+![GitHub Profile Viewer](https://via.placeholder.com/600x300?text=![Uploading Screenshot 2024-12-18 at 3.29.34 AM.png…]()
+)
 
 ## Installation
 
