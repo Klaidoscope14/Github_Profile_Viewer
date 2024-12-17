@@ -29,11 +29,6 @@ This is a simple web application that allows users to view GitHub profiles by en
 3. Click the **"Get Profile"** button.
 4. View the profile details retrieved from GitHub.
 
-## Screenshots
-
-![GitHub Profile Viewer](https://via.placeholder.com/600x300?text=![Uploading Screenshot 2024-12-18 at 3.29.34 AM.png…]()
-)
-
 ## Installation
 
 1. Clone this repository to your local machine:
